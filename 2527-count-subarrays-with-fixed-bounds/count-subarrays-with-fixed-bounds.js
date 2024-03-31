@@ -15,14 +15,12 @@ var countSubarrays = function (nums, minK, maxK) {
             bad_index = i;
         }
 
-        if (minK === nums[i]) {
-            lastMin = i;
-        }
-        if (maxK === nums[i]) {
-            lastMax = i;
-        }
+        if (minK === nums[i]) lastMin = i;
+        if (maxK === nums[i]) lastMax = i;
 
-        ans += Math.max(0, Math.min(lastMin, lastMax) - bad_index);
+        let bound = Math.min(lastMin, lastMax);
+        let tmp = bound - bad_index
+        ans += tmp <= 0 ? 0 : tmp;
     }
     return ans;
 };
