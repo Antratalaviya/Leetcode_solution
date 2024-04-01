@@ -3,9 +3,17 @@
  * @return {number}
  */
 var lengthOfLastWord = function (s) {
-    s = s.trim().split(" ");
-    return s[s.length - 1].trim().length;
+    s = s.trim();
+    let res = 0;
+    for (let i = s.length - 1; i >= 0; i--) {
+        if (s[i] === ' ') break;
+        res++;
+    }
+    return res;
 };
+//44ms 48.37mb
+// s = s.trim().split(" ");
+// return s[s.length - 1].trim().length;
 
 // 47ms and 48.12mb
  // s = s.trim();
