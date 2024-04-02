@@ -5,14 +5,13 @@
  */
 var isIsomorphic = function (s, t) {
     let map = {};
-    let setVal = new Set();
+    let setVal = {}
     for (let i = 0; i < s.length; i++) {
-        if (map.hasOwnProperty(s[i])) {
-            if (map[s[i]] !== t[i]) return false;
+        if (map[s[i]] !== setVal[t[i]]) {
+            return false;
         } else {
-            if (setVal.has(t[i])) return false;
-            map[s[i]] = t[i];
-            setVal.add(t[i]);
+            map[s[i]] = i;
+            setVal[t[i]] = i;
         }
     }
     return true;
