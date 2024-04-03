@@ -3,12 +3,15 @@
  * @return {string}
  */
 var largestNumber = function (nums) {
-    if (!nums || nums.length === 0) {
-        return '0'
+    let str = nums.map((item) => item.toString());
+
+    function compare(a, b) {
+        if (Number(a + b) > Number(b + a)) {
+            return -1
+        } else return 1
     }
-    nums.sort((a, b) => `${b}${a}` - `${a}${b}`)
-    if(nums[0]===0){
-        return '0';
-    }
-    return nums.join('')
+
+    if (str.every(item => item === "0")) return "0"
+
+    return str.sort(compare).join("");
 };
