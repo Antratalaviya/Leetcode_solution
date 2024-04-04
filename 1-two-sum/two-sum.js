@@ -9,7 +9,7 @@ var twoSum = function (nums, target) {
     for (let i = 0; i < nums.length; i++) {
         let complement = target - nums[i]
         if (hashMap.has(complement) && hashMap.get(complement) !== i) {
-            return [i, hashMap.get(complement)]
+            return [i, hashMap.get(complement)];
         } else {
             hashMap.set(nums[i], i);
         }
