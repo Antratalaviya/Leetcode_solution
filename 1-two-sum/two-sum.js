@@ -5,13 +5,13 @@
  */
 var twoSum = function (nums, target) {
     let hashMap = new Map();
-
     for (let i = 0; i < nums.length; i++) {
-        let complement = target - nums[i]
-        if (hashMap.has(complement) && hashMap.get(complement) !== i) {
-            return [i, hashMap.get(complement)];
+        if (hashMap.has(target - nums[i])) {
+            return [hashMap.get(target - nums[i]), i];
         } else {
             hashMap.set(nums[i], i);
         }
     }
 };
+
+// && hashMap.get(target - nums[i]) !== i
