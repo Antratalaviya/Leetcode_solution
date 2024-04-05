@@ -4,15 +4,17 @@
  * @return {number}
  */
 var minimumSubarrayLength = function (nums, k) {
-    let min = Infinity;
-    for (let s = 0; s < nums.length; s++) {
-        let res = nums[s];
-        for (let r = s; r < nums.length; r++) {
-            res |= nums[r];
-            if (res >= k && min > r - s + 1) {
-                min = r - s + 1;
+    let length = nums.length;
+
+    let table = new Array(length).fill(0);
+    for (let size = 1; size <= length; size++) {
+        let upperBound = length - size + 1;
+        for (let i = 0; i < upperBound; i++) {
+            table[i] |= nums[i + size - 1];
+            if (table[i] >= k) {
+                return size;
             }
         }
     }
-    return min === Infinity ? -1 : min;
+    return -1;
 };
