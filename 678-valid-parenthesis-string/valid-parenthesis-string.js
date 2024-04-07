@@ -6,18 +6,11 @@ var checkValidString = function (s) {
     let leftMin = 0;
     let leftMax = 0;
     for (let char of s) {
-        if (char === '(') {
-            leftMax++;
-            leftMin++;
-        } else if (char === ")") {
-            leftMin--;
-            leftMax--;
-        } else {
-            leftMax++;
-            leftMin--;
-        }
-        if (leftMin < 0) leftMin = 0;
+        leftMax += char === ')' ? -1 : 1;
         if (leftMax < 0) return false;
+
+        leftMin += char === '(' ? 1 : -1;
+        if (leftMin < 0) leftMin = 0;
     }
-    return leftMin === 0;
+    return leftMin <= 0;
 };
