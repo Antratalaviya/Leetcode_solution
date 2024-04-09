@@ -6,13 +6,12 @@
 var timeRequiredToBuy = function (tickets, k) {
     let time = 0;
     let i = 0;
-    while (i < tickets.length && tickets[k] !== 0) {
+    while (tickets[k] > 0) {
         if (tickets[i]) {
             tickets[i] -= 1;
             time++;
         }
-        i++;
-        if (i === tickets.length) i = 0;
+        i = (i + 1) % tickets.length;
     }
     return time;
 };
