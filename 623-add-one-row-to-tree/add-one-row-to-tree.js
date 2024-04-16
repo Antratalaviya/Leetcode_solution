@@ -14,8 +14,8 @@
  */
 var addOneRow = function (root, val, depth) {
     if (!root) return;
-    if(depth===1){
-        return new TreeNode(val, root, null); 
+    if (depth === 1) {
+        return new TreeNode(val, root, null);
     }
     function bfs(node, v, d) {
         if (d === depth) return;
@@ -24,9 +24,11 @@ var addOneRow = function (root, val, depth) {
             let newNodeR = new TreeNode(v, null, node.right);
             node.left = newNodeL;
             node.right = newNodeR;
+            return;
         }
         if (node.left) bfs(node.left, v, d + 1);
         if (node.right) bfs(node.right, v, d + 1);
+        return;
     }
 
     bfs(root, val, 1);
