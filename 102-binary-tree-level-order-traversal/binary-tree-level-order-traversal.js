@@ -12,7 +12,27 @@
  */
 var levelOrder = function (root) {
     let res = [];
+
+    function bfs(node, level) {
+        if (!node) return [];
+
+        if (!res[level]) {
+            res.push([node.val]);
+        } else {
+            res[level].push(node.val);
+        }
+
+        bfs(node.left, level + 1);
+        bfs(node.right, level + 1);
+    }
+    bfs(root, 0);
+    return res;
+};
+
+/**
     if (!root) return [];
+
+    let res = [];
     let queue = [root];
 
     while (queue[0]) {
@@ -31,4 +51,4 @@ var levelOrder = function (root) {
     }
 
     return res;
-};
+ */
