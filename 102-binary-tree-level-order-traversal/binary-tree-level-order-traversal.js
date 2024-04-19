@@ -12,7 +12,8 @@
  */
 var levelOrder = function (root) {
     let res = [];
-    let queue = [root]
+    if (!root) return [];
+    let queue = [root];
 
     while (queue[0]) {
         let levelEle = [];
@@ -26,7 +27,7 @@ var levelOrder = function (root) {
             if (curr.right) queue.push(curr.right);
         }
 
-        res.push(levelEle);
+        if (levelEle) res.push(levelEle);
     }
 
     return res;
