@@ -7,28 +7,29 @@ var findFarmland = function (land) {
     let m = land.length;
     let n = land[0].length;
 
-    function coordinate(row, col) {
-        let corr = [row, col];
-        let r = row;
-        let c = col;
+    let bottomRow = 0;
+    let bottomCol = 0;
 
-        while (r < m && land[r][col] === 1) r++;
-        while (c < n && land[row][c] === 1) c++;
+    function dfs(i, j) {
+        if (i < 0 || i >= m || j < 0 || j >= n || land[i][j] === 0) return;
 
-        corr.push(r - 1, c - 1);
+        land[i][j] = 0;
 
-        for (let i = row; i < r; i++) {
-            for (let j = col; j < c; j++) {
-                land[i][j] = 0;
-            }
-        }
-        return corr;
+        if (i > bottomRow) bottomRow = i;
+        if (j > bottomCol) bottomCol = j;
+
+        dfs(i + 1, j);
+        dfs(i, j + 1);
+        return;
     }
 
     for (let r = 0; r < m; r++) {
         for (let c = 0; c < n; c++) {
             if (land[r][c] === 1) {
-                ans.push(coordinate(r, c));
+                dfs(r, c);
+                ans.push([r, c, bottomRow, bottomCol]);
+                bottomRow = 0;
+                bottomCol = 0;
             }
         }
     }
