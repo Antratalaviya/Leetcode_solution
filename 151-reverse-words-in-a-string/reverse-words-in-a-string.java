@@ -4,7 +4,7 @@ class Solution {
         StringBuilder res = new StringBuilder();
         String pre = "";
         for (int i = strs.length - 1; i >= 0; i--) {
-            if (strs[i].length() != 0) {
+            if (!strs[i].isEmpty()) {
                 res.append(pre);
                 pre = " ";
                 res.append(strs[i]);
