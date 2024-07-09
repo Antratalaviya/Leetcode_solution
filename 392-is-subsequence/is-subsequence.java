@@ -5,10 +5,9 @@ class Solution {
 
         while (i < sLen && j < tLen) {
             if (s.charAt(i) == t.charAt(j)) {
-                j++;
                 i++;
-            } else
-                j++;
+            }
+            j++;
         }
         return i == sLen;
     }
