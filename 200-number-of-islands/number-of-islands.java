@@ -17,11 +17,7 @@ class Solution {
         int n = grid.length - 1;
         int m = grid[0].length - 1;
 
-        if ((row < 0 || row > n) || (col < 0 || col > m)) {
-            return;
-        }
-
-        if (grid[row][col] == '0') {
+        if (row < 0 || row > n || col < 0 || col > m || grid[row][col] == '0') {
             return;
         }
 
