@@ -14,25 +14,27 @@
  * }
  */
 class Solution {
-    public TreeNode createBT(int[] preorder, HashMap<Integer, Integer> map, int idx, int left, int right){
-        TreeNode root = new TreeNode(preorder[idx]);
-        int mid = map.get(preorder[idx]);
-        if(left<mid){
-            root.left = createBT(preorder, map, idx+1, left, mid-1);
+    int p = 0, i = 0;
+
+    public TreeNode createBT(int[] preorder, int[] inorder, int stop) {
+        if (p >= inorder.length) {
+            return null;
         }
-        if(right>mid){
-            root.right = createBT(preorder, map, idx+mid-left+1, mid+1, right);
+
+        if (inorder[i] == stop) {
+            i++;
+            return null;
         }
+
+        TreeNode root = new TreeNode(preorder[p++]);
+
+        root.left = createBT(preorder, inorder, root.val);
+        root.right = createBT(preorder, inorder, stop);
 
         return root;
     }
+
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        HashMap<Integer, Integer> map = new HashMap();
-
-        for (int i = 0; i < inorder.length; i++) {
-            map.put(inorder[i], i);
-        }
-
-        return createBT(preorder, map, 0, 0, inorder.length - 1);
+        return createBT(preorder, inorder, Integer.MIN_VALUE);
     }
 }
