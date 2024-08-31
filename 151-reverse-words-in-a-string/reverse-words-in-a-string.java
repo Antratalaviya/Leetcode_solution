@@ -3,6 +3,7 @@ class Solution {
         String[] strs = s.split(" ");
         StringBuilder res = new StringBuilder();
         String pre = "";
+
         for (int i = strs.length - 1; i >= 0; i--) {
             if (!strs[i].isEmpty()) {
                 res.append(pre);
