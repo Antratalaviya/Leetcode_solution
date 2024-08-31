@@ -1,8 +1,6 @@
 class Solution {
     public int majorityElement(int[] nums) {
-        Integer candidate = null;
-        int count = 0;
-
+        Integer candidate = null, count = 0;
         for (int num : nums) {
             if (candidate != null && num == candidate) {
                 count++;
@@ -13,9 +11,10 @@ class Solution {
                 count--;
             }
         }
+
         count = 0;
         for (int num : nums) {
-            if (candidate != null && num == candidate) {
+            if (num == candidate) {
                 count++;
             }
         }
