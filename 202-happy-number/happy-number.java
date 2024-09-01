@@ -6,17 +6,17 @@ class Solution {
         do {
             slow = square(slow);
             fast = square(square(fast));
-        } while (slow != fast);
+        }while(slow != fast);
 
         return slow == 1;
     }
 
-    public int square(int n) {
+    public int square(int n){
         int sum = 0;
-        while (n > 0) {
-            int digit = n % 10;
-            sum += (digit * digit);
-            n /= 10;
+        while(n>0){
+            int dig = n % 10;
+            sum += dig * dig;
+            n = n/10;
         }
         return sum;
     }
