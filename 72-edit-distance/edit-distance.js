@@ -9,9 +9,6 @@ var minDistance = function (word1, word2) {
     let prev = new Array(n + 1).fill(0);
     let curr = new Array(n + 1).fill(0);
 
-    console.log(m);
-    console.log(n);
-
     for (let i = 1; i <= n; i++) {
         prev[i] = i
     }
@@ -28,9 +25,6 @@ var minDistance = function (word1, word2) {
         prev = curr;
         curr = new Array(n + 1).fill(0);
     }
-
-    console.log(prev)
-    console.log(curr)
 
     return prev[n];
 };
