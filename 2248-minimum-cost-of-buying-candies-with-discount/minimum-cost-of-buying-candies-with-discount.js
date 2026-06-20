@@ -3,14 +3,26 @@
  * @return {number}
  */
 var minimumCost = function (cost) {
-    cost = cost.sort((a, b) => b - a);
     const n = cost?.length;
-    let i = 0;
-    let minCost = 0;
+    const costBag = new Array(101).fill(0);
 
-    for (let i = 0; i < n; i++) {
-        if (((i + 1) % 3) === 0) continue;
-        minCost += cost[i];
+    for (let c of cost) {
+        costBag[c]++;
+    }
+
+    let minCost = 0;
+    let purchased = 0
+    for (let i = 100; i >= 1; i--) {
+        while (costBag[i] > 0) {
+            if (purchased === 2) {
+                purchased = 0;
+            } else {
+                minCost += i;
+                purchased++;
+            }
+
+            costBag[i]--;
+        }
     }
 
     return minCost;
