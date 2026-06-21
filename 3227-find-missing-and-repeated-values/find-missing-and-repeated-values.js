@@ -3,22 +3,20 @@
  * @return {number[]}
  */
 var findMissingAndRepeatedValues = function (grid) {
-    const hashMap = new Map();
     let nums = grid?.flat();
+    let n = grid?.length;
+    let max = n * n;
+    let count = new Array(max + 1).fill(0);
     let res = [];
 
     for (let num of nums) {
-        if (!hashMap.has(num)) {
-            hashMap.set(num, 1);
-        } else {
-            hashMap.set(num, hashMap.get(num) + 1);
-        }
+        count[num]++;
     }
 
-    for (let i = 1; i <= grid?.length ** 2; i++) {
-        if (hashMap.has(i) && hashMap.get(i) > 1) {
+    for (let i = 1; i <= max; i++) {
+        if (count[i] === 2) {
             res[0] = i;
-        } else if (!hashMap.has(i)) {
+        } else if (count[i] === 0) {
             res[1] = i;
         }
     }
