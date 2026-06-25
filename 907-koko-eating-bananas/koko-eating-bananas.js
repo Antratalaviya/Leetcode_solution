@@ -19,7 +19,6 @@ var minEatingSpeed = function (piles, h) {
 
     let low = 1;
     let high = max;
-    let ans = max;
 
     while (low <= high) {
         let mid = Math.floor((low + high) / 2);
@@ -27,11 +26,10 @@ var minEatingSpeed = function (piles, h) {
         let hour = countHours(piles, mid);
 
         if (hour <= h) {
-            ans = mid;
             high = mid - 1;
         } else {
             low = mid + 1;
         }
     }
-    return ans;
+    return low;
 };
