@@ -3,12 +3,18 @@
  * @param {number} k
  * @return {number}
  */
-//brute-force 
+//optimized approach O(log n) 
 var findKthPositive = function (arr, k) {
-    for (let ele of arr) {
-        if (ele <= k) {
-            k++;
+    let low = 0;
+    let high = arr?.length - 1;
+
+    while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        if (arr[mid] - mid <= k) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
         }
     }
-    return k;
+    return high + k + 1;
 };
