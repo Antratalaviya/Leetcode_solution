@@ -3,19 +3,22 @@
  * @param {number} k
  * @return {number}
  */
-const canSplit = (nums, maxSize) => {
-    let partitions = 1;
-    let subArraySum = 0;
+const canSplit = (nums, size, k) => {
+    let count = 1;
+    let currSum = 0;
 
     for (let num of nums) {
-        if (subArraySum + num <= maxSize) {
-            subArraySum += num;
+        if (currSum + num > size) {
+            count++;
+            currSum = num;
         } else {
-            partitions++;
-            subArraySum = num;
+            currSum += num;
+        }
+        if (count > k) {
+            return true;
         }
     }
-    return partitions;
+    return false;
 }
 var splitArray = function (nums, k) {
     let sum = 0;
@@ -23,7 +26,7 @@ var splitArray = function (nums, k) {
 
     for (let num of nums) {
         sum += num;
-        max = Math.max(max, num)
+        max = Math.max(max, num);
     }
 
     let low = max;
@@ -32,8 +35,8 @@ var splitArray = function (nums, k) {
     while (low <= high) {
         let mid = Math.floor((low + high) / 2);
 
-        let partitions = canSplit(nums, mid)
-        if (partitions > k) {
+        if (canSplit(nums, mid, k)) {
+            ans = mid
             low = mid + 1;
         } else {
             high = mid - 1;
