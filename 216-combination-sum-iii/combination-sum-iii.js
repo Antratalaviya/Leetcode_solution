@@ -3,23 +3,23 @@
  * @param {number} n
  * @return {number[][]}
  */
-const backTrack = (k, tar, ind, ans, arr, ds) => {
+const backTrack = (k, tar, ind, ans, ds) => {
     if (ds?.length === k && tar === 0) {
         ans.push([...ds]);
+        return;
     }
 
-    for (let i = ind; i < arr?.length; i++) {
+    if (tar <= 0 || ds?.length > k) return;
 
-        if (arr[i] > tar) break;
-
-        ds.push(arr[i]);
-        backTrack(k, tar - arr[i], i + 1, ans, arr, ds);
+    for (let i = ind; i <= 9; i++) {
+        if (i > tar) break;
+        ds.push(i);
+        backTrack(k, tar - i, i + 1, ans, ds);
         ds.pop();
     }
 }
 var combinationSum3 = function (k, n) {
-    const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const res = [];
-    backTrack(k, n, 0, res, arr, []);
+    backTrack(k, n, 1, res, []);
     return res;
 };
