@@ -1,7 +1,5 @@
-const INT_MAX = 2 ** 31 - 1;
 var MinStack = function () {
     this.s = [];
-    this.min = INT_MAX;
 };
 
 /** 
@@ -10,22 +8,19 @@ var MinStack = function () {
  */
 MinStack.prototype.push = function (value) {
     if (!this.s.length) {
-        this.min = value;
         this.s.push([value, value]);
-    } else {
-        let min = Math.min(this.min, value);
-        this.s.push([value, min]);
-        this.min = min;
+        return;
     }
+    let min = Math.min(this.getMin(), value);
+    this.s.push([value, min]);
+
 };
 
 /**
  * @return {void}
  */
 MinStack.prototype.pop = function () {
-    let top = this.s.pop();
-    this.min = this.s.length ? this.s[this.s.length - 1][1] : INT_MAX;
-    return top;
+    return this.s.pop();
 };
 
 /**
