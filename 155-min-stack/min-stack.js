@@ -1,5 +1,7 @@
+const INT_MAX = 2 ** 31 - 1;
 var MinStack = function () {
     this.s = [];
+    this.min = INT_MAX;
 };
 
 /** 
@@ -8,33 +10,45 @@ var MinStack = function () {
  */
 MinStack.prototype.push = function (value) {
     if (!this.s.length) {
-        this.s.push([value, value]);
+        this.min = value;
+        this.s.push(value);
         return;
     }
-    let min = Math.min(this.getMin(), value);
-    this.s.push([value, min]);
 
+    if (value < this.min) {
+        this.s.push(2 * value - this.min);
+        this.min = value;
+        return;
+    }
+    this.s.push(value);
 };
 
 /**
  * @return {void}
  */
 MinStack.prototype.pop = function () {
-    return this.s.pop();
+    let top = this.s.pop();
+    if (top < this.min) {
+        this.min = 2 * this.min - top;
+    }
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.top = function () {
-    return this.s[this.s.length - 1][0];
+    let top = this.s[this.s.length - 1]
+    if (top < this.min) {
+        return this.min;
+    }
+    return top;
 };
 
 /**
  * @return {number}
  */
 MinStack.prototype.getMin = function () {
-    return this.s[this.s.length - 1][1];
+    return this.min;
 };
 
 /** 
