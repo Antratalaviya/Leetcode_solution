@@ -2,20 +2,51 @@
  * @param {number[]} heights
  * @return {number}
  */
-var largestRectangleArea = function (heights) {
-    heights.push(0);
-    let ans = 0;
+const findNSE = (arr) => {
+    let n = arr?.length;
+    let st = [];
+    let ans = new Array(n).fill(n - 1);
 
-    let cols = [];
-    cols.top = () => cols[cols.length - 1];
-
-    for (let i = 0; i < heights.length; i++) {
-        while (cols.length && heights[cols.top()] > heights[i]) {
-            let h = heights[cols.pop()];
-            let w = cols.length ? i - cols.top() - 1 : i;
-            ans = Math.max(ans, h * w);
+    for (let i = n - 1; i >= 0; i--) {
+        while (st?.length && arr[st[st?.length - 1]] >= arr[i]) {
+            st.pop();
         }
-        cols.push(i);
+        if (st?.length) {
+            ans[i] = st[st?.length - 1] - 1;
+        }
+        st.push(i);
     }
     return ans;
+}
+const findPSEE = (arr) => {
+    let n = arr?.length;
+    let st = [];
+    let ans = new Array(n).fill(0);
+
+    for (let i = 0; i < n; i++) {
+        while (st?.length && arr[st[st?.length - 1]] >= arr[i]) {
+            st.pop();
+        }
+        if (st?.length) {
+            ans[i] = st[st?.length - 1] + 1;
+        }
+        st.push(i);
+    }
+    return ans;
+}
+var largestRectangleArea = function (heights) {
+    const nse = findNSE(heights);
+    const psee = findPSEE(heights);
+    let n = heights?.length;
+    let res = 0;
+    
+    for (let i = 0; i < n; i++) {
+        let left = psee[i];
+        let right = nse[i];
+
+        let width = right - left + 1;
+
+        res = Math.max(res, (heights[i] * width));
+    }
+    return res;
 };
