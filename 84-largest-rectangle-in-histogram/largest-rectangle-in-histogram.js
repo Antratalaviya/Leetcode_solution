@@ -7,46 +7,45 @@ const findNSE = (arr) => {
     let st = [];
     let ans = new Array(n).fill(n - 1);
 
-    for (let i = n - 1; i >= 0; i--) {
-        while (st?.length && arr[st[st?.length - 1]] >= arr[i]) {
-            st.pop();
-        }
-        if (st?.length) {
-            ans[i] = st[st?.length - 1] - 1;
-        }
-        st.push(i);
-    }
+
     return ans;
 }
 const findPSEE = (arr) => {
     let n = arr?.length;
-    let st = [];
-    let ans = new Array(n).fill(0);
 
-    for (let i = 0; i < n; i++) {
-        while (st?.length && arr[st[st?.length - 1]] >= arr[i]) {
-            st.pop();
-        }
-        if (st?.length) {
-            ans[i] = st[st?.length - 1] + 1;
-        }
-        st.push(i);
-    }
     return ans;
 }
 var largestRectangleArea = function (heights) {
-    const nse = findNSE(heights);
-    const psee = findPSEE(heights);
     let n = heights?.length;
-    let res = 0;
-    
+    const leftSmall = new Array(n);
+    const rightSmall = new Array(n);
+
+    let st = [];
+
+    //Left small
     for (let i = 0; i < n; i++) {
-        let left = psee[i];
-        let right = nse[i];
-
-        let width = right - left + 1;
-
-        res = Math.max(res, (heights[i] * width));
+        while (st?.length && heights[st[st?.length - 1]] >= heights[i]) {
+            st.pop();
+        }
+        leftSmall[i] = st?.length ? st[st?.length - 1] + 1 : 0;
+        st.push(i);
     }
-    return res;
+
+    st = [];
+
+    //Right small
+    for (let i = n - 1; i >= 0; i--) {
+        while (st?.length && heights[st[st?.length - 1]] >= heights[i]) {
+            st.pop();
+        }
+        rightSmall[i] = st?.length ? st[st?.length - 1] - 1 : n - 1;
+        st.push(i);
+    }
+
+    let maxArea = 0;
+    for (let i = 0; i < n; i++) {
+        let width = rightSmall[i] - leftSmall[i] + 1;
+        maxArea = Math.max(maxArea, (heights[i] * width));
+    }
+    return maxArea;
 };
