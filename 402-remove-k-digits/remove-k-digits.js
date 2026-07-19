@@ -4,26 +4,54 @@
  * @return {string}
  */
 var removeKdigits = function (num, k) {
-    let s = [num[0]];
+    if (k === num?.length) return "0";
 
-    for (let i = 1; i < num.length; ++i) {
-        if (k > 0 && s.length && num[i] < s[s.length - 1]) {
-            s.pop();
+    let st = [];
+    for (let i = 0; i < num?.length; i++) {
+        while (st?.length && k > 0 && st[st?.length - 1] > num[i]) {
+            st.pop();
             k--;
-            i--;
-            continue;
         }
-        else {
-            s.push(num[i]);
-        }
+        st.push(num[i]);
     }
 
-    while (k > 0 && s.length) {
-        s.pop();
+    while (st?.length && k > 0) {
+        st.pop();
         k--;
     }
-    while (s[0] === '0') {
-        s.shift();
+
+    let res = "";
+
+    while (st?.length) {
+        res += st.pop();
     }
-    return s.length ? s.join('') : '0';
+
+    res = res.replace(/0+$/, "");
+
+    res = res.split('').reverse().join('');
+
+    if (!res || !res.length) {
+        return "0"
+    }
+    return res;
 };
+
+//Algo
+/**
+initialize an empty stack
+loop through all digits in an num
+while stack is not empty and k is greater than zero
+    pop all element which is greater than curr element
+    k--  
+push curr element
+stack is result(make it reverse)
+remove leading zero after reverse 
+
+//edge cases
+k === num?.length
+    return 0;
+k > 0 after traversal
+    remove element from end; 
+if res is ""
+    return 0;          
+ */
