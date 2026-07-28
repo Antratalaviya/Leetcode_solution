@@ -3,20 +3,22 @@
  * @param {number} goal
  * @return {number}
  */
-var numSubarraysWithSum = function (nums, goal) {
-    let freq = new Map();
-    let currSum = 0;
-    let res = 0;
-
-    freq.set(0, 1);
-
-    for (let r = 0; r < nums.length; r++) {
-        currSum += nums[r];
-
-        if (freq.has(currSum - goal)) {
-            res += freq.get(currSum - goal);
-        }
-        freq.set(currSum, (freq.get(currSum) || 0) + 1);
+const atMost = (nums, k) => {
+    if (k < 0) {
+        return 0;
     }
-    return res;
+    let l = 0; sum = 0; count = 0;
+    for (let r = 0; r < nums.length; r++) {
+        sum += nums[r];
+
+        while (sum > k) {
+            sum -= nums[l];
+            l++;
+        }
+        count += (r - l + 1);
+    }
+    return count
+}
+var numSubarraysWithSum = function (nums, goal) {
+    return atMost(nums, goal) - atMost(nums, goal - 1)
 };
