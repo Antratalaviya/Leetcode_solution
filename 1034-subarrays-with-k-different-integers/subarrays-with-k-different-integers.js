@@ -3,26 +3,30 @@
  * @param {number} k
  * @return {number}
  */
-var subarraysWithKDistinct = function (nums, k) {
-    return solve(nums, k) - solve(nums, k - 1);
-};
+const atMost = (nums, k) => {
+    if (k <= 0) {
+        return 0;
+    }
+    let count = 0; res = 0, l = 0;
+    let freq = new Map()
+    for (let r = 0; r < nums?.length; r++) {
+        freq.set(nums[r], (freq.get(nums[r]) || 0) + 1);
+        if (freq.get(nums[r]) === 1) {
+            count++;
+        }
 
-function solve(nums, k) {
-    if (k === 0) return 0
-    let cnt = new Map();
-    let l = 0;
-    let diff = 0;
-    let ans = 0;
-    for (let r = 0; r < nums.length; r++) {
-        cnt.set(nums[r], (cnt.get(nums[r]) || 0) + 1);
-        if (cnt.get(nums[r]) === 1) diff++;
-
-        while (diff > k) {
-            cnt.set(nums[l], cnt.get(nums[l]) - 1);
-            if (cnt.get(nums[l]) === 0) diff--;
+        while (count > k) {
+            freq.set(nums[l], (freq.get(nums[l]) || 0) - 1);
+            if (freq.get(nums[l]) === 0) {
+                count--;
+            }
             l++;
         }
-        ans += (r - l + 1);
+
+        res += (r - l + 1);
     }
-    return ans;
+    return res;
 }
+var subarraysWithKDistinct = function (nums, k) {
+    return atMost(nums, k) - atMost(nums, k - 1);
+};
